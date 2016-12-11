@@ -18,5 +18,5 @@ class Request(models.Model):
     # location, undecided
     requester = models.ForeignKey(User, on_delete=models.CASCADE)
     def __str__(self):
-        return self.requester.user_name + self.request_time
+        return self.requester.user_name + ', time:' + self.request_time.strftime('%m/%d/%Y')
 
