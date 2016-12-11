@@ -7,7 +7,10 @@ from .models import User, Request
 
 # Create your views here.
 def index(request):
-    return HttpResponse("Hello, app.")
+    template = loader.get_template('gym_buddy_app/index.html')
+    context = {
+    }
+    return HttpResponse(template.render(context, request))
 
 # Login action
 def login(request, user_name, user_password):
