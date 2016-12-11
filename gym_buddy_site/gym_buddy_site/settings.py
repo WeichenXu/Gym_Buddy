@@ -55,7 +55,7 @@ ROOT_URLCONF = 'gym_buddy_site.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS' : [],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

@@ -1,0 +1,11 @@
+<h2>The request list of User: {{user_name}}</h2>
+{% if request_list %}
+    <ul>
+    {% for request in request_list %}
+        <li>{{request.id}}</li>
+    {% endfor%}
+    </ul>
+{% else %}
+    <p>No Request for this user,<.p>
+{% endif%}
+

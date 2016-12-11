@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.utils import timezone
+from django.template import loader
 
 from .models import User, Request
 
@@ -28,3 +30,20 @@ def register(request, user_name, user_password):
         user.save()
         register_status = "Succeed"
     return HttpResponse(response % (user_name,register_status) )
+
+# Add a request of a user
+def addRequest(request, user_id):
+    user = User.objects.get(id = user_id)
+    req = Request(request_time = timezone.now(), requester = user)
+    req.save()
+
+# List all request of a user
+def listRequest(request, user_id):
+    user = User.objects.get(id = user_id)
+    request_list = Request.objects.filter(requester = user)
+    template = loader.get_template('gym_buddy_app/list_request.html')
+    context = {
+        'user_name': user.user_name,
+        'request_list': request_list
+    }
+    return HttpResponse(template.render(context, request))
