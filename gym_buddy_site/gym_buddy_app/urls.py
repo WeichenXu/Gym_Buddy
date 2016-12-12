@@ -4,17 +4,15 @@ from . import views
 
 app_name = 'gym_buddy_app'
 urlpatterns = [
-    # ex:/gym_buddy/
-    url(r'^$', views.index, name='index'),
+    # index view, ex:/gym_buddy/
+    url(r'^$', views.IndexView, name='index'),
+    # request view, ex:/gym_buddy/request/user_id
+    url(r'^(?P<user_id>[\w]+)/request/$', views.RequestView, name='request'),
     # ex:/gym_buddy/login, use POST
-    # url(r'^login/$', views.login, name='login'),
-    # ex:/gym_buddy/username/password/login
-    url(r'^(?P<user_name>[\w]+)/(?P<user_password>[\w]+)/login/$', views.login, name='login'),
-    # ex:/gym_buddy/username/password/register
-    url(r'^(?P<user_name>[\w]+)/(?P<user_password>[\w]+)/register/$', views.register, name='register'),
+    url(r'^login/$', views.login, name='login'),
+    # ex:/gym_buddy/register, use POST
+    url(r'^register/$', views.register, name='register'),
     # ex:/gym_buddy/addRequest
     url(r'^(?P<user_id>[\d]+)/addRequest/$', views.addRequest, name='addRequest'),
-    # ex:/gym_buddy/user_id/listRequest
-    url(r'^(?P<user_id>[\d]+)/listRequest/$', views.listRequest, name='listRequest'),
 ]
 

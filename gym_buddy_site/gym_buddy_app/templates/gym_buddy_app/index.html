@@ -1,8 +1,8 @@
 <h1>Welcome to Gym Buddy Site</h1>
 {% if error_message %}<p><strong>{{error_message}}</strong></p>{% endif %}
-<form action="{% url 'gym_buddy_app:login' user_name='aa' user_password='password' %}">
+<form action="{% url 'gym_buddy_app:login' %}" method="post">
     {% csrf_token %}
-    <input type="text" name="name" value="username"/>
-    <input type="text" name="password" value="password"/>
+    <input type="text" name="user_name" id="input_user_name" value="username"/>
+    <input type="text" name="user_password" id="input_user_password" value="password"/>
     <input type="submit" value="login" />
 </form>
