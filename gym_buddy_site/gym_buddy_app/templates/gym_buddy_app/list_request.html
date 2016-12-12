@@ -1,4 +1,4 @@
-<h2>The request list of User: {{user_name}}</h2>
+<h2>The request list of User: {{user.user_name}}</h2>
 {% if request_list %}
     <ul>
     {% for request in request_list %}
@@ -8,4 +8,13 @@
 {% else %}
     <p>No Request for this user,<.p>
 {% endif%}
-
+<h2>Add a request</h2>
+<form action="{% url 'gym_buddy_app:addRequest' user.id  %}" method="post">
+    {% csrf_token %}
+    <input type="datetime-local" name="time"/>
+    <input type="number" name="longitude" />
+    <input type="number" name="latitude" />
+    <input type="text" name="training_part" />
+    <input type="number" name="training_weight" />
+    <input type="submit" value="add a request">
+</form>

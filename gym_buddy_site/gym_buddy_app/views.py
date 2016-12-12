@@ -19,8 +19,8 @@ def RequestView(request, user_id):
     request_list = Request.objects.filter(requester = user)
     template = loader.get_template('gym_buddy_app/list_request.html')
     context = {
-        'user_name': user.user_name,
-        'request_list': request_list
+        'user': user,
+        'request_list': request_list,
     }
     return HttpResponse(template.render(context, request))
 
@@ -50,6 +50,7 @@ def login(request):
     return HttpResponseRedirect(reverse('gym_buddy_app:request', args=(login_user.id,)))
 
 # Register action
+# {'user_name':xxx, 'user_password':xxx}
 def register(request):
     # parse the parameters
     try:
@@ -73,8 +74,21 @@ def register(request):
         return HttpResponseRedirect(reverse('gym_buddy_app:request', args=(user.id,)))
 
 # Add a request of a user
+# POST {'time':xx-xx:xx, 'longitude':xx.xx, 'latitude':xx.xx, 'training_part':Leg, 'training_weight':xx}
 def addRequest(request, user_id):
+    # parse the parameters
+    try:
+        time_get = request.POST['time']
+        longitude_get = request.POST['longitude']
+        latitude_get = request.POST['latitude']
+        training_part_get = request.POST['training_part']
+        training_weight_get = request.POST['training_weight']
+    except KeyError:
+        print ('Please parse the parameters')
     user = User.objects.get(id = user_id)
-    req = Request(request_time = timezone.now(), requester = user)
+    req = Request(request_time = time_get, longitude = longitude_get, latitude = latitude_get, requester = user )
     req.save()
+    return HttpResponseRedirect(reverse('gym_buddy_app:request', args=(user.id,)))
 
+# Confirm a request
+# def confirmRequest(request)
