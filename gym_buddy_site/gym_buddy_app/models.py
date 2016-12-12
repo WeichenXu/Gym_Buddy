@@ -26,7 +26,7 @@ class User(models.Model):
 class Request(models.Model):
     request_time = models.DateTimeField('date published')
     # location
-    longtitude = models.DecimalField(default=0.0, max_digits=9, decimal_places=6)
+    longitude = models.DecimalField(default=0.0, max_digits=9, decimal_places=6)
     latitude = models.DecimalField(default=0.0, max_digits=9, decimal_places=6)
     requester = models.ForeignKey(User, on_delete=models.CASCADE)
     # training part
