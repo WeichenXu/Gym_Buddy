@@ -6,3 +6,9 @@
     <input type="text" name="user_password" id="input_user_password" value="password"/>
     <input type="submit" value="login" />
 </form>
+<form action="{% url 'gym_buddy_app:register' %}" method="post">
+    {% csrf_token %}
+    <input type="text" name="user_name" id="input_user_name_2" value="username"/>
+    <input type="text" name="user_password" id="input_user_password_2" value="password"/>
+    <input type="submit" value="register" />
+</form>

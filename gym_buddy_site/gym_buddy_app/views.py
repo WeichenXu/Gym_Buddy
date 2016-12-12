@@ -50,16 +50,27 @@ def login(request):
     return HttpResponseRedirect(reverse('gym_buddy_app:request', args=(login_user.id,)))
 
 # Register action
-def register(request, user_name, user_password):
-    response = "Register, user_name: %s, status: %s"
+def register(request):
+    # parse the parameters
+    try:
+        user_name = request.POST['user_name']
+        print (user_name)
+        user_password = request.POST['user_password']
+        print (user_password)
+    except KeyError:
+        return render(request, 'gym_buddy_app/index.html', {
+            'error_message':"Please parse user_name & user_password.",
+        })
     try:
         user = User.objects.get(user_name = user_name)
-        register_status = "Duplicated user_name"
+        return render(request, 'gym_buddy_app/index.html', {
+            'error_message':"Please choose another username, previous one has already been used by others",
+        })
     except User.DoesNotExist:
         user = User(user_name = user_name, user_password = user_password)
         user.save()
         register_status = "Succeed"
-    return HttpResponse(response % (user_name,register_status) )
+        return HttpResponseRedirect(reverse('gym_buddy_app:request', args=(user.id,)))
 
 # Add a request of a user
 def addRequest(request, user_id):
