@@ -17,6 +17,9 @@ def IndexView(request):
 def RequestView(request, user_id):
     user = User.objects.get(id = user_id)
     request_list = Request.objects.filter(requester = user)
+    # update recommendation for user request
+    for req in request_list:
+        recommend(req.id)
     template = loader.get_template('gym_buddy_app/list_request.html')
     context = {
         'user': user,
@@ -55,9 +58,7 @@ def register(request):
     # parse the parameters
     try:
         user_name = request.POST['user_name']
-        print (user_name)
         user_password = request.POST['user_password']
-        print (user_password)
     except KeyError:
         return render(request, 'gym_buddy_app/index.html', {
             'error_message':"Please parse user_name & user_password.",
@@ -85,10 +86,27 @@ def addRequest(request, user_id):
         training_weight_get = request.POST['training_weight']
     except KeyError:
         print ('Please parse the parameters')
+        return HttpResponseRedirect(reverse('gym_buddy_app:request', args=(user.id,)))
     user = User.objects.get(id = user_id)
     req = Request(request_time = time_get, longitude = longitude_get, latitude = latitude_get, requester = user )
     req.save()
     return HttpResponseRedirect(reverse('gym_buddy_app:request', args=(user.id,)))
 
 # Confirm a request
-# def confirmRequest(request)
+# from_request_id: the request id who confirm, to...: request be confirmed
+# POST {'request_id':xxxx}
+def confirmRequest(request, user_id, from_request_id, to_request_id):
+    from_req = Request.objects.get(id = from_request_id)
+    to_req = Request.objects.get(id = to_request_id)
+    from_req.matched_request.add(to_req)
+    to_req.save()
+    return HttpResponseRedirect(reverse('gym_buddy_app:request', args=(user_id,)))
+
+# Recommend function for the request
+# Iterate all requests in the database and add recommended ones
+def recommend(request_id):
+    req = Request.objects.get(id = request_id)
+    recommend_req = Request.objects.all().exclude(requester=req.requester)
+    for rec in recommend_req:
+        req.recommend_request.add(rec)
+    req.save()

@@ -1,8 +1,21 @@
-<h2>The request list of User: {{user.user_name}}</h2>
+<h2>The posted request list of User: {{user.user_name}}</h2>
 {% if request_list %}
     <ul>
+    {# display all requests belong to the user#}
     {% for request in request_list %}
-        <li>{{request.id}}</li>
+        {# display all matched user#}
+        <li>{{request.id}}:{{request.request_time|date}}</li>
+        {% for match in request.matched_request.all %}
+            <li>user_attend:{{match.requester.user_name}}</li>
+        {% empty %}
+            <li>No matched gym buddy yet.</li>
+        {% endfor%}
+        {# display all recommend user#}
+        {% for recommend in request.recommend_request.all %}
+            <li><a href="{% url 'gym_buddy_app:confirmRequest' user.id request.id recommend.id %}">recommend_user:{{recommend.requester.user_name}}</a></li>
+        {% empty %}
+            <li>No recommend gym buddy yet.</li>
+        {% endfor%}
     {% endfor%}
     </ul>
 {% else %}

@@ -13,6 +13,10 @@ urlpatterns = [
     # ex:/gym_buddy/register, use POST
     url(r'^register/$', views.register, name='register'),
     # ex:/gym_buddy/addRequest
+    # parse the informaiton of the request througth POST
     url(r'^(?P<user_id>[\d]+)/addRequest/$', views.addRequest, name='addRequest'),
+    # ex:/gym_buddy/confirmRequest
+    # parse the reqeust id through POST
+    url(r'^(?P<user_id>[\d]+)/(?P<from_request_id>[\d]+)/(?P<to_request_id>[\d]+)/confirmRequest/$', views.confirmRequest, name='confirmRequest'),
 ]
 

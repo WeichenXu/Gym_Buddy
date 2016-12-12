@@ -40,7 +40,8 @@ class Request(models.Model):
     )
     training_part = models.CharField(max_length=1, choices=TRAINING_CHOICES, default=LEG)
     training_weight = models.IntegerField(default=0)
-    buddy = models.ManyToManyField("self")
+    matched_request = models.ManyToManyField("self")
+    recommend_request = models.ManyToManyField("self")
     def __str__(self):
         return self.requester.user_name + ', time:' + self.request_time.strftime('%m/%d/%Y')
 
