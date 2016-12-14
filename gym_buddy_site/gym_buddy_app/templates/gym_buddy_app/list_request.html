@@ -1,8 +1,27 @@
-<h2>The posted request list of User: {{user.user_name}}</h2>
+{# Load the tag library #}
+{% load bootstrap3 %}
+
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+{# Display django.contrib.messages as Bootstrap alerts #}
+{% bootstrap_messages %}
+<br>
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+<div class="panel panel-default">
+  <div class="panel-heading">The posted request list of User: {{user.user_name}}</div>
+
 {% if request_list %}
-    <ul>
+
+
     {# display all requests belong to the user#}
     {% for request in request_list %}
+
+    <div class="panel-body">
+
         {# display all matched user#}
         <li>{{request.id}}:{{request.request_time|date}}</li>
         {% for match in request.matched_request.all %}
@@ -16,18 +35,43 @@
         {% empty %}
             <li>No recommend gym buddy yet.</li>
         {% endfor%}
+        <a href="/admin/gym_buddy_app/request/{{request.id}}/change/">change request</a>
+      </div>
     {% endfor%}
-    </ul>
+
 {% else %}
-    <p>No Request for this user,<.p>
+<div class="panel-body">
+
+    <p>No Request for this user,</p>
+  </div>
 {% endif%}
-<h2>Add a request</h2>
+</div>
+</div>
+</div>
+</div>
+<br>
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+<div class="panel panel-default">
+  <div class="panel-heading">Add a request</div>
+  <div class="panel-body">
+
 <form action="{% url 'gym_buddy_app:addRequest' user.id  %}" method="post">
     {% csrf_token %}
-    <input type="datetime-local" name="time"/>
-    <input type="number" name="longitude" />
-    <input type="number" name="latitude" />
-    <input type="text" name="training_part" />
-    <input type="number" name="training_weight" />
-    <input type="submit" value="add a request">
+
+    <input type="datetime-local" name="time" class="form-control"/><br>
+    <input type="number" name="longitude" class="form-control"/><br>
+    <input type="number" name="latitude" class="form-control"/><br>
+    <input type="text" name="training_part" class="form-control"/><br>
+    <input type="number" name="training_weight" class="form-control"/><br>
+    <input type="submit" value="add a request" class="btn btn-default">
 </form>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
