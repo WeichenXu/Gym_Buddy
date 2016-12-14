@@ -25,7 +25,7 @@ SECRET_KEY = 'b!=7k&yg-7cmvg3&ql_xt8q87wf#)^3_hy=hd%pm-c6b%=fqol'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['gym-buddy.qbgn4mumnp.us-west-2.elasticbeanstalk.com', 'localhost']
+ALLOWED_HOSTS = ['gymbuddy.qbgn4mumnp.us-west-2.elasticbeanstalk.com', 'localhost']
 
 
 # Application definition
