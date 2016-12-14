@@ -1,14 +1,67 @@
-<h1>Welcome to Gym Buddy Site</h1>
-{% if error_message %}<p><strong>{{error_message}}</strong></p>{% endif %}
+{# Load the tag library #}
+{% load bootstrap3 %}
+
+
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript jquery=True %}
+
+{# Display django.contrib.messages as Bootstrap alerts #}
+{% bootstrap_messages %}
+
+<h1 style="text-align:center">Welcome to Gym Buddy Site</h1>
+{% if error_message %}<p style="text-align:center;color:red"><strong>{{error_message}}</strong></p>{% endif %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">Login</div>
+                <div class="panel-body">
 <form action="{% url 'gym_buddy_app:login' %}" method="post">
     {% csrf_token %}
-    <input type="text" name="user_name" id="input_user_name" value="username"/>
-    <input type="text" name="user_password" id="input_user_password" value="password"/>
-    <input type="submit" value="login" />
+    <input type="text" name="user_name" id="input_user_name" value="username" class="form-control"/><br>
+    <input type="text" name="user_password" id="input_user_password" value="password" class="form-control"/><br>
+    <input type="submit" value="login" class="btn btn-primary btn-md"/>
 </form>
-<form action="{% url 'gym_buddy_app:register' %}" method="post">
-    {% csrf_token %}
-    <input type="text" name="user_name" id="input_user_name_2" value="username"/>
-    <input type="text" name="user_password" id="input_user_password_2" value="password"/>
-    <input type="submit" value="register" />
-</form>
+
+
+<!-- Button trigger modal -->
+<button type="button"class="btn btn-primary btn-md" data-toggle="modal" data-target="#myModal">
+  Register
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="myModalLabel">Register</h4>
+      </div>
+      <div class="modal-body">
+
+        <form action="{% url 'gym_buddy_app:register' %}" method="post">
+            {% csrf_token %}
+            <input type="text" name="user_name" id="input_user_name_2" value="username" class="form-control"/><br>
+            <input type="text" name="user_password" id="input_user_password_2" value="password" class="form-control"/><br>
+
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <input type="submit" value="register" class="btn btn-default"/>
+      </div>
+    </form>
+
+    </div>
+  </div>
+</div>
+</div>
+</div>
+
+
+</div>
+</div>
+
+
+</div>

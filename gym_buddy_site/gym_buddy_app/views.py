@@ -42,7 +42,7 @@ def login(request):
         })
     try:
         login_user = User.objects.get(user_name = user_name)
-        if login_user.user_password != user_password: 
+        if login_user.user_password != user_password:
             return render(request, 'gym_buddy_app/index.html', {
                 'error_message':"Invalid password",
             })

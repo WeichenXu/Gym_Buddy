@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'geoposition',
+    'bootstrap3',
 ]
 
 GEOPOSITION_GOOGLE_MAPS_API_KEY = 'AIzaSyCTLEC5bkE7JXzU2uGwvYaqfLQbefoojjo'
@@ -102,6 +103,8 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+
 
 
 # Internationalization
