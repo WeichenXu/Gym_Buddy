@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
+from geoposition.fields import GeopositionField
 
 # Create your models here.
 
@@ -26,6 +27,7 @@ class User(models.Model):
 class Request(models.Model):
     request_time = models.DateTimeField('date published')
     # location
+    location = GeopositionField(blank=True)
     longitude = models.DecimalField(default=0.0, max_digits=9, decimal_places=6)
     latitude = models.DecimalField(default=0.0, max_digits=9, decimal_places=6)
     requester = models.ForeignKey(User, on_delete=models.CASCADE)
