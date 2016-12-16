@@ -1,0 +1,39 @@
+<head>
+<style>
+#map {
+    height: 500px;
+}
+</style>
+</head>
+
+<body>
+<h1>Request ID:{{object.id}}</h1>
+<p>Time: {{object.request_time}}</p>
+<p>Training Part: {{object.training_part}}</p>
+<p>Training Weight: {{object.training_weight}}</p>
+
+<div id="map"></d>
+<script>
+var map;
+function initialize() {
+    map = new google.maps.Map(document.getElementById('map'), {
+        center: {lat: {{object.location.latitude}}, lng:{{object.location.longitude}}},
+        zoom: 5
+    });
+    var bounds = new google.maps.LatLngBounds();
+    function addMarker(lat, lng, title) {
+        var position = new google.maps.LatLng(lat, lng);
+        var marker = new google.maps.Marker({
+            position: position,
+            map: map,
+            title: title
+            });
+        bounds.extend(position);
+    }
+    addMarker({{ object.location.latitude }}, {{ object.location.longitude }}, "{{ object.id }}");
+    map.fitBounds(bounds);
+}
+</script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCTLEC5bkE7JXzU2uGwvYaqfLQbefoojjo&callback=initialize"
+  type="text/javascript"></script>
+</body>
