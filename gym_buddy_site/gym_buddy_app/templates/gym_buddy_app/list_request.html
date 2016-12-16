@@ -12,7 +12,7 @@
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
 <div class="panel panel-default">
-  <div class="panel-heading">The posted request list of User: {{user.user_name}}</div>
+  <div class="panel-heading">Posted request</div>
 
 {% if request_list %}
 
@@ -23,7 +23,7 @@
     <div class="panel-body">
 
         {# display all matched user#}
-        <li>{{request.id}}:{{request.request_time|date}}</li>
+        <a href="{% url 'gym_buddy_app:requestDetail' request.id  %}">{{request.id}}:{{request.request_time|date}}</a>
         {% for match in request.matched_request.all %}
             <li>user_attend:{{match.requester.user_name}}</li>
         {% empty %}
@@ -35,7 +35,6 @@
         {% empty %}
             <li>No recommend gym buddy yet.</li>
         {% endfor%}
-        <a href="/admin/gym_buddy_app/request/{{request.id}}/change/">change request</a>
       </div>
     {% endfor%}
 
@@ -61,11 +60,15 @@
 
 <form action="{% url 'gym_buddy_app:addRequest' user.id  %}" method="post">
     {% csrf_token %}
-
+    <label>Time to choose</label>
     <input type="datetime-local" name="time" class="form-control"/><br>
-    <input type="number" name="longitude" class="form-control"/><br>
-    <input type="number" name="latitude" class="form-control"/><br>
-    <input type="text" name="training_part" class="form-control"/><br>
+    <label>Training part</label>
+    <select name="training_part" class="form-control">
+        {% for k,v in choices%}
+            <option value="{{k}}">{{v}}
+        {% endfor %}
+    </select>
+    <label>Training weight</label>
     <input type="number" name="training_weight" class="form-control"/><br>
     <input type="submit" value="add a request" class="btn btn-default">
 </form>

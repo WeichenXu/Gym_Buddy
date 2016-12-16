@@ -18,5 +18,8 @@ urlpatterns = [
     # ex:/gym_buddy/confirmRequest
     # parse the reqeust id through POST
     url(r'^(?P<user_id>[\d]+)/(?P<from_request_id>[\d]+)/(?P<to_request_id>[\d]+)/confirmRequest/$', views.confirmRequest, name='confirmRequest'),
+    # ex:/gym_buddy/requestDetail/
+    # parse the request id
+    url(r'^(?P<pk>[0-9]+)/requestDetail/$', views.requestView.as_view(), name='requestDetail'),
 ]
 

@@ -1,8 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponseRedirect, HttpResponse
 from django.utils import timezone
 from django.template import loader
 from django.urls import reverse
+from django.views import generic
 
 from .models import User, Request
 
@@ -24,6 +25,7 @@ def RequestView(request, user_id):
     context = {
         'user': user,
         'request_list': request_list,
+        'choices': Request.TRAINING_CHOICES,
     }
     return HttpResponse(template.render(context, request))
 
@@ -110,3 +112,8 @@ def recommend(request_id):
     for rec in recommend_req:
         req.recommend_request.add(rec)
     req.save()
+
+# Show the detail of the request
+class requestView(generic.DetailView):
+    model = Request
+    template_name = 'gym_buddy_app/request_detail.html'
