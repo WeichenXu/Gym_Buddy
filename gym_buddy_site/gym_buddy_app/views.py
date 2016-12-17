@@ -82,15 +82,13 @@ def addRequest(request, user_id):
     # parse the parameters
     try:
         time_get = request.POST['time']
-        longitude_get = request.POST['longitude']
-        latitude_get = request.POST['latitude']
         training_part_get = request.POST['training_part']
         training_weight_get = request.POST['training_weight']
     except KeyError:
         print ('Please parse the parameters')
-        return HttpResponseRedirect(reverse('gym_buddy_app:request', args=(user.id,)))
+        return HttpResponseRedirect(reverse('gym_buddy_app:request', args=(user_id,)))
     user = User.objects.get(id = user_id)
-    req = Request(request_time = time_get, longitude = longitude_get, latitude = latitude_get, requester = user )
+    req = Request(request_time = time_get, requester = user )
     req.save()
     return HttpResponseRedirect(reverse('gym_buddy_app:request', args=(user.id,)))
 
