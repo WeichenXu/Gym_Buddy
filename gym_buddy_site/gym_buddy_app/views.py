@@ -102,11 +102,27 @@ def confirmRequest(request, user_id, from_request_id, to_request_id):
     to_req.save()
     return HttpResponseRedirect(reverse('gym_buddy_app:request', args=(user_id,)))
 
+# fuzzy match of the training weight
+def trainingWeightClose(weightX, weightY):
+    matchThreshold = 20
+    if abs(weightX - weightY) < matchThreshold:
+        return True
+    return False
+
+# match the geolocation
+def locationClose(locationX, locationY):
+    threshold = 0.05
+    if abs(locationX.position.latitude - locationY.position.latitude) < threshold and abs(locationY.position.longitude - locationY.position.longitude) < threshold:
+        return True
+    return False
+
+# justify whether the location of the two request are close
+
 # Recommend function for the request
 # Iterate all requests in the database and add recommended ones
 def recommend(request_id):
     req = Request.objects.get(id = request_id)
-    recommend_req = Request.objects.all().exclude(requester=req.requester)
+    recommend_req = Request.objects.all().exclude(requester=req.requester).filter( training_part=req.training_part )
     for rec in recommend_req:
         req.recommend_request.add(rec)
     req.save()

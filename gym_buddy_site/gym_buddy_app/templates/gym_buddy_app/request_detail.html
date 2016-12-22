@@ -1,3 +1,10 @@
+{# Load the tag library #}
+{% load bootstrap3 %}
+
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript jquery=True%}
+
 <head>
 <style>
 #map {
@@ -7,16 +14,52 @@
 </head>
 
 <body>
-<h1>Request ID:{{object.id}}</h1>
-<p>Time: {{object.request_time}}</p>
-<p>Training Part: {{object.training_part}}</p>
-<p>Training Weight: {{object.training_weight}}</p>
+<ul class="navbar navbar-inverse">
+    <a class="navbar-brand" href="#">Gym Buddy</a>
+    <ul class="nav navbar-nav">
+    <li class="nav-item active">
+    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+    </li>
+    <li class="nav-item">
+    <a class="nav-link" href="#">Features</a>
+    </li>
+    <li class="nav-item">
+    <a class="nav-link" href="#">Pricing</a>
+    </li>
+    <li class="nav-item">
+    <a class="nav-link" href="#">About</a>
+    </li>
+    </ul>
+</ul>
 
-<div id="map"></div>
+
+<!--Grid of the page-->
+<br>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-4">
+           <div class="panel panel-default">
+                <div class="panel-heading">Request Informaiton</div>  
+                <div class="panel-body">
+                    <p>Request ID:{{object.id}}</p>
+                    <p>Time: {{object.request_time}}</p>
+                    <p>Training Part: {{object.training_part}}</p>
+                    <p>Training Weight: {{object.training_weight}}</p>
+                    Latitude:<input type="number" name="lat">
+                    Longitude:<input type="number" name="lng">
+                </div>
+           </div>
+        </div>
+        <div class="col-sm-8" id="map">
+            
+        </div>
+    </div> <!--row-->
+</div> <!--container-->
+
 <script>
-var map;
+
 function initialize() {
-    map = new google.maps.Map(document.getElementById('map'), {
+    var map = new google.maps.Map(document.getElementById('map'), {
         center: {lat: {{object.location.latitude}}, lng:{{object.location.longitude}}},
         zoom: 5
     });
@@ -26,8 +69,13 @@ function initialize() {
         var marker = new google.maps.Marker({
             position: position,
             map: map,
-            title: title
+            title: title,
+            draggable: true
             });
+        google.maps.event.addListener('dragend', function(event){
+            document.getElementById('lat').value = event.latLng.lat();
+            document.getElementById('lng').value = event.latLng.lng();
+        });
         bounds.extend(position);
     }
     addMarker({{ object.location.latitude }}, {{ object.location.longitude }}, "{{ object.id }}");

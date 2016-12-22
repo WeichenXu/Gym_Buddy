@@ -2,8 +2,6 @@ from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
 from geoposition.fields import GeopositionField
 
-# Create your models here.
-
 # user model
 @python_2_unicode_compatible
 class User(models.Model):
